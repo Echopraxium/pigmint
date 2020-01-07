@@ -1,0 +1,97 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Pigmint.gd" type="Script" id=1]
+[ext_resource path="res://src/Utility/System.gd" type="Script" id=2]
+[ext_resource path="res://src/Utility/Log.gd" type="Script" id=3]
+[ext_resource path="res://src/GUI/Menus/Menus.gd" type="Script" id=4]
+[ext_resource path="res://fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf" type="DynamicFontData" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 18
+font_data = ExtResource( 5 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 20
+font_data = ExtResource( 5 )
+
+[sub_resource type="Theme" id=5]
+default_font = SubResource( 4 )
+
+[sub_resource type="ButtonGroup" id=3]
+
+[node name="Pigmint" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Utility" type="Node" parent="."]
+
+[node name="System" type="Node" parent="Utility"]
+script = ExtResource( 2 )
+
+[node name="SysTimer1" type="Timer" parent="Utility/System"]
+wait_time = 0.1
+
+[node name="Log" type="Node" parent="Utility"]
+script = ExtResource( 3 )
+
+[node name="Model" type="Node" parent="."]
+
+[node name="View" type="Node" parent="."]
+
+[node name="Dialogs" type="Node" parent="View"]
+
+[node name="FileOpenDialog" type="FileDialog" parent="View/Dialogs"]
+margin_top = 26.0
+margin_right = 331.0
+margin_bottom = 241.0
+window_title = "Open a File"
+mode = 0
+access = 2
+filters = PoolStringArray( "*.png" )
+current_dir = "D:/_Dev/_00_github/pigmint"
+current_path = "D:/_Dev/_00_github/pigmint/"
+
+[node name="HelpAboutDialog" type="AcceptDialog" parent="View/Dialogs"]
+margin_left = 20.9001
+margin_top = 65.5502
+margin_right = 360.9
+margin_bottom = 239.55
+window_title = "About PigMint"
+
+[node name="Menus" type="Node" parent="View"]
+script = ExtResource( 4 )
+
+[node name="MainMenu" type="HBoxContainer" parent="View/Menus"]
+editor/display_folded = true
+anchor_right = 1.0
+margin_right = -34.0
+margin_bottom = 31.0
+theme = SubResource( 2 )
+
+[node name="FileSubmenu" type="MenuButton" parent="View/Menus/MainMenu"]
+margin_right = 37.0
+margin_bottom = 31.0
+text = "File"
+flat = false
+
+[node name="HelpSubmenu" type="MenuButton" parent="View/Menus"]
+margin_left = 1002.16
+margin_top = 1.80502
+margin_right = 1022.16
+margin_bottom = 32.805
+theme = SubResource( 5 )
+group = SubResource( 3 )
+text = "?"
+flat = false
+
+[node name="Separator" type="HSeparator" parent="View"]
+anchor_right = 1.0
+margin_left = -1.0
+margin_top = 29.0
+margin_bottom = 36.0
+
+[node name="Controller" type="Node" parent="."]
+[connection signal="timeout" from="Utility/System/SysTimer1" to="Utility/System" method="_on_SysTimer1_timeout"]
+[connection signal="resized" from="View/Menus/MainMenu" to="View/Menus" method="_on_MainMenu_resized"]
